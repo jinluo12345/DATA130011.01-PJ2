@@ -29,8 +29,9 @@ This repository contains the PyTorch implementation for the experiments describe
 You'll likely have a main training script. You'll need to specify the model architecture and hyperparameters via config files
 
 Example: Training the Base VGG Model (VGG_A)
+```bash
 python train.py --config=config/base.yaml
-
+```
 ## Ablation
 
 for further experiments, you can use different config files to do ablation experiments.
