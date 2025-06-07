@@ -1,0 +1,94 @@
+# Configuration file for training script
+
+# -----------------------------
+# Model configuration
+# -----------------------------
+model:
+  name: "VGG-light"         # If name == "VGG-base", use VGG_A from models.vgg
+  num_classes: 10          # Number of output classes
+
+# -----------------------------
+# Data configuration
+# -----------------------------
+data:
+  root: "./data"           # Root directory for CIFAR data
+  augmentation:
+  #   random_crop:
+  #     enabled: true         # 是否启用随机裁剪
+  #     p: 0.5                # 随机裁剪的发生概率
+  #     crop_size: 32         # 裁剪后图像大小
+  #     crop_padding: 4       # 裁剪前的填充像素
+  #   horizontal_flip:
+  #     enabled: true         # 是否启用随机水平翻转
+  #     p: 0.5                # 翻转的发生概率
+  #   random_rotation:
+  #     enabled: true         # 是否启用随机旋转
+  #     p: 0.5                # 旋转的发生概率
+  #     rotation_degree: 15   # 最大旋转角度（±15°）
+  #   random_affine:
+  #     enabled: true         # 是否启用随机仿射变换（旋转 + 平移 + 缩放 + 剪切）
+  #     p: 0.5                # 仿射变换的发生概率
+  #     affine_deg: 10        # 仿射中的旋转角度范围（±10°）
+  #     affine_translate: [0.1, 0.1]  # 平移范围：相对于宽度/高度的比例
+  #     affine_scale: [0.9, 1.1]      # 缩放范围
+  #     affine_shear: 5       # 剪切角度范围（±5°）
+  #   color_jitter:
+  #     enabled: true         # 是否启用颜色抖动
+  #     p: 0.5                # 颜色抖动的发生概率
+  #     brightness: 0.2       # 亮度调整幅度
+  #     contrast: 0.2         # 对比度调整幅度
+  #     saturation: 0.2       # 饱和度调整幅度
+  #     hue: 0.1              # 色相调整幅度
+  #   random_grayscale:
+  #     enabled: true         # 是否启用随机灰度变换
+  #     p: 0.1                # 灰度转换的发生概率
+  #     grayscale_prob: 0.1   # RandomGrayscale 中使用的概率参数
+    normalize_mean: [0.4914, 0.4822, 0.4465]  # 归一化均值
+    normalize_std: [0.247, 0.243, 0.261]   # 归一化标准差
+
+# -----------------------------
+# Training configuration
+# -----------------------------
+training:
+  device_ids: [0]          # List of GPU device IDs to use
+  target_gpu_id: 0         # The primary GPU ID to target
+  num_workers: 64           # Number of DataLoader workers
+  batch_size: 128          # Batch size
+  seed_value: 2020         # Random seed
+  epochs: 200               # Number of training epochs
+
+# -----------------------------
+# Optimizer configuration
+# -----------------------------
+optimizer:
+  type: "Adam"             # Optimizer type: "Adam" or "SGD"
+  lr: 0.001                # Learning rate
+  weight_decay: 0.0        # Weight decay (L2 regularization)
+  # If using SGD, you can specify momentum here:
+  momentum: 0.9
+
+# -----------------------------
+# Scheduler configuration (optional)
+# -----------------------------
+# scheduler:
+#   type: "StepLR"           # Scheduler type: "StepLR", "MultiStepLR", "CosineAnnealingLR", etc.
+#   params:
+#     step_size: 5           # Step size (number of epochs between LR decay)
+#     gamma: 0.1             # Multiplicative factor of learning rate decay
+  # Example for MultiStepLR:
+  # type: "MultiStepLR"
+  # params:
+  #   milestones: [10, 15]
+  #   gamma: 0.1
+
+# -----------------------------
+# Paths for saving outputs
+# -----------------------------
+paths:
+  figures: "reports/figures/ablation-size/light"                        # Relative path from project root
+  models: "reports/models/ablation-size/light"                          # Relative path from project root
+  training_data: "reports/training_data/ablation-size/light"            # Relative path from project root
+  best_model_filename: "vgg_a_cifar10_best.pth"     # Filename for best model checkpoint
+  landscape_plot_filename: "loss_landscape_indicator.png"  # Filename for the loss landscape plot
+  step_records_filename: "step_metrics.csv"         # Filename for per-step metrics (loss, grad)
+  epoch_metrics_filename: "epoch_metrics.csv"       # Filename for per-epoch metrics (loss, acc)

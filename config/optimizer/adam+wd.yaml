@@ -1,0 +1,57 @@
+# config/adam_cosine_anneal.yaml
+
+# -----------------------------
+# Model configuration
+# -----------------------------
+model:
+  name: "VGG-base"
+  num_classes: 10
+
+# -----------------------------
+# Data configuration
+# -----------------------------
+data:
+  root: "./data"
+  augmentation:
+    normalize_mean: [0.4914, 0.4822, 0.4465]
+    normalize_std: [0.247, 0.243, 0.261]
+
+# -----------------------------
+# Training configuration
+# -----------------------------
+training:
+  device_ids: [0]
+  target_gpu_id: 0
+  num_workers: 64
+  batch_size: 128
+  seed_value: 2020
+  epochs: 200
+
+# -----------------------------
+# Optimizer configuration（Adam）
+# -----------------------------
+optimizer:
+  type: "Adam"
+  lr: 0.001
+  weight_decay: 0.0001
+
+# -----------------------------
+# Scheduler configuration（CosineAnnealingLR）
+# -----------------------------
+scheduler:
+  # type: "CosineAnnealingLR"
+  # params:
+  #   T_max: 200          # 一个完整周期为 200 个 epoch
+  #   eta_min: 1.0e-6       # lr 在最低点时的最小值
+
+# -----------------------------
+# Paths for saving outputs
+# -----------------------------
+paths:
+  figures: "reports/figures/ablation-optimizer/adam+wd"                        # Relative path from project root
+  models: "reports/models/ablation-optimizer/adam+wd"                          # Relative path from project root
+  training_data: "reports/training_data/ablation-optimizer/adam+wd"            # Relative path from project root
+  best_model_filename: "vgg_a_cifar10_best.pth"     # Filename for best model checkpoint
+  landscape_plot_filename: "loss_landscape_indicator.png"  # Filename for the loss landscape plot
+  step_records_filename: "step_metrics.csv"
+  epoch_metrics_filename: "epoch_metrics.csv"

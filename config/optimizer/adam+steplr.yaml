@@ -1,0 +1,57 @@
+# config/adam_step_lr.yaml
+
+# -----------------------------
+# Model configuration
+# -----------------------------
+model:
+  name: "VGG-base"
+  num_classes: 10
+
+# -----------------------------
+# Data configuration
+# -----------------------------
+data:
+  root: "./data"
+  augmentation:
+    normalize_mean: [0.4914, 0.4822, 0.4465]
+    normalize_std: [0.247, 0.243, 0.261]
+
+# -----------------------------
+# Training configuration
+# -----------------------------
+training:
+  device_ids: [0]
+  target_gpu_id: 0
+  num_workers: 64
+  batch_size: 128
+  seed_value: 2020
+  epochs: 200
+
+# -----------------------------
+# Optimizer configuration（Adam）
+# -----------------------------
+optimizer:
+  type: "Adam"             # 使用 Adam
+  lr: 0.001                # 初始学习率
+  weight_decay: 0.0        # L2 正则化
+
+# -----------------------------
+# Scheduler configuration（StepLR）
+# -----------------------------
+scheduler:
+  type: "StepLR"
+  params:
+    step_size: 50          # 每 50 个 epoch 衰减一次 lr
+    gamma: 0.1             # lr ← lr * gamma
+
+# -----------------------------
+# Paths for saving outputs
+# -----------------------------
+paths:
+  figures: "reports/figures/ablation-optimizer/adam+steplr"                        # Relative path from project root
+  models: "reports/models/ablation-optimizer/adam+steplr"                          # Relative path from project root
+  training_data: "reports/training_data/ablation-optimizer/adam+steplr"            # Relative path from project root
+  best_model_filename: "vgg_a_cifar10_best.pth"     # Filename for best model checkpoint
+  landscape_plot_filename: "loss_landscape_indicator.png"  # Filename for the loss landscape plot
+  step_records_filename: "step_metrics.csv"
+  epoch_metrics_filename: "epoch_metrics.csv"
